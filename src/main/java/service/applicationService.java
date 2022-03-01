@@ -31,15 +31,28 @@ public class applicationService{
             String query = "SELECT * FROM applicant_demographic";
             statement = connection.createStatement();
             rs = statement.executeQuery(query);
+            int i=0;
             while (rs.next()) {
-                System.out.println((rs.getBinaryStream("demog_detail")));
-                byte[] b = rs.getBytes("demog_detail");
-                System.out.println(new String(b));
-                CryptoUtil cryptoUtil = new CryptoUtil();
-                System.out.println("encrypted data"+b);
-                byte[] decrypted = cryptoUtil.decrypt(b, LocalDateTime.now());
-                break;
+                if (i<218) {
+                    System.out.println((rs.getBinaryStream("demog_detail")));
+                    byte[] b = rs.getBytes("demog_detail");
+                    System.out.println(new String(b));
+                    byte[] b1 = rs.getBinaryStream("demog_detail").toString().getBytes();
+                    System.out.println(new String(b1));
+                    System.out.println(b1);
+                    CryptoUtil cryptoUtil = new CryptoUtil();
+                    System.out.println("encrypted data" + b);
+
+
+                    System.out.println("decrypted data" + rs.getString("cr_by"));
+                    byte[] decrypted = cryptoUtil.decrypt(b, LocalDateTime.now());
+//                if (i++>37) {
+//                    break;
+//                }
+                }
+                i++;
             }
+            System.out.println(i);
         }
 
     }
